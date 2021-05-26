@@ -1,5 +1,6 @@
 package com.contractManagementPortal.demo.contractor;
 
+import com.contractManagementPortal.demo.paymentType.PaymentType;
 import org.springframework.data.annotation.TypeAlias;
 
 import javax.persistence.*;
@@ -14,11 +15,29 @@ public class Contractor {
     @Id
     @GeneratedValue
     private long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String street;
+
+    @Column(nullable = false)
     private String city;
+
+    @Column(nullable = false)
     private String state;
+
+    @Column(nullable = false)
     private String zip;
+
+    /*Contractor will have a unidirectional many to one relationship with Payment Type with Contractor being the
+    owning side.*/
+    @ManyToOne
+    @JoinColumn(name="PAYMENT_TYPE_ID")
+    private PaymentType paymentType;
+
+//    @Column(nullable = false)
     private Date dateAdded;
 
     //Default, no args constructor
@@ -27,13 +46,14 @@ public class Contractor {
     }
 
     //All args constructor, date will be generated on its own.
-    public Contractor(String name, String street, String city, String state, String zip) {
+    public Contractor(String name, String street, String city, String state, String zip, PaymentType paymentType) {
         this.name = name;
         this.street = street;
         this.city = city;
         this.state = state;
         this.zip = zip;
         this.dateAdded = new Date();
+        this.paymentType = paymentType;
     }
 
     public long getId() {
@@ -90,6 +110,14 @@ public class Contractor {
 
     public void setDateAdded(Date dateAdded) {
         this.dateAdded = dateAdded;
+    }
+
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
     }
 
     @Override
