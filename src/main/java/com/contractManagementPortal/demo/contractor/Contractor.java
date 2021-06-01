@@ -34,7 +34,7 @@ public class Contractor {
     /*Contractor will have a unidirectional many to one relationship with Payment Type with Contractor being the
     owning side.*/
     @ManyToOne
-    @JoinColumn(name="PAYMENT_TYPE_ID")
+    @JoinColumn(name="payment_type_id")
     private PaymentType paymentType;
 
 //    @Column(nullable = false)

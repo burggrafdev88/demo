@@ -36,8 +36,15 @@ public class ContractorController {
 //    @GetMapping("/contractors/")
     @RequestMapping(method = RequestMethod.GET, path = "/contractors")
     public ResponseEntity<List<Contractor>> getContractors() {
+        System.out.println("Get contractors called.  Will return a list.");
         List<Contractor> contractors = contractorRepository.findAll();
         return new ResponseEntity<>(contractors, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete-contractor/{id}")
+    public void deleteContractorByID(@PathVariable String id){
+        System.out.println("ID to delete: " + id);
+        long convertedID = Long.parseLong(id);
+        contractorRepository.deleteById(convertedID);
+    }
 }

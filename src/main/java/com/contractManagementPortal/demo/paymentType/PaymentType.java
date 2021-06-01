@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "paymentType")
+@Table(name = "PaymentType")
 public class PaymentType {
     @Id
     @GeneratedValue
