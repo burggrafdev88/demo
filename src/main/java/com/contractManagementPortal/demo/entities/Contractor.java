@@ -1,20 +1,18 @@
-package com.contractManagementPortal.demo.contractor;
+package com.contractManagementPortal.demo.entities;
 
-import com.contractManagementPortal.demo.paymentType.PaymentType;
-import org.springframework.data.annotation.TypeAlias;
-
+import com.contractManagementPortal.demo.entities.PaymentType;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 
 
-//Table - Contractor
+//Entity - Contractor will be mapped to its own table by JPA. Table name will be equal to class name.
 @Entity
 public class Contractor {
     @Id
-    @GeneratedValue
-    private long id;
+    private UUID id;   //use to be of type 'long' and had annotation '@GeneratedValue'
 
     @Column(nullable = false)
     private String name;
@@ -33,9 +31,9 @@ public class Contractor {
 
     /*Contractor will have a unidirectional many to one relationship with Payment Type with Contractor being the
     owning side.*/
-    @ManyToOne
-    @JoinColumn(name="payment_type_id")
-    private PaymentType paymentType;
+//    @ManyToOne
+//    @JoinColumn(name="payment_type_id")
+//    private PaymentType paymentType;
 
 //    @Column(nullable = false)
     private Date dateAdded;
@@ -53,14 +51,14 @@ public class Contractor {
         this.state = state;
         this.zip = zip;
         this.dateAdded = new Date();
-        this.paymentType = paymentType;
+//        this.paymentType = paymentType;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -112,13 +110,13 @@ public class Contractor {
         this.dateAdded = dateAdded;
     }
 
-    public PaymentType getPaymentType() {
-        return paymentType;
-    }
-
-    public void setPaymentType(PaymentType paymentType) {
-        this.paymentType = paymentType;
-    }
+//    public PaymentType getPaymentType() {
+//        return paymentType;
+//    }
+//
+//    public void setPaymentType(PaymentType paymentType) {
+//        this.paymentType = paymentType;
+//    }
 
     @Override
     public String toString() {

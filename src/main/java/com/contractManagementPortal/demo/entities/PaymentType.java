@@ -1,4 +1,4 @@
-package com.contractManagementPortal.demo.paymentType;
+package com.contractManagementPortal.demo.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

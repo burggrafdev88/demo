@@ -1,12 +1,8 @@
 package com.contractManagementPortal.demo;
 
-import com.contractManagementPortal.demo.contractor.Contractor;
+import com.contractManagementPortal.demo.entities.Contractor;
 //import com.contractManagementPortal.demo.service.contractorDOAService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+
 
 ////Using command line runner to create and insert contractors into the database at the start of the program.
 //@Component
