@@ -35,7 +35,7 @@ public class Contractor {
 //    @JoinColumn(name="payment_type_id")
 //    private PaymentType paymentType;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private Date dateAdded;
 
     //Default, no args constructor

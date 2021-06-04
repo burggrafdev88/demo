@@ -5,10 +5,8 @@ import com.contractManagementPortal.demo.repository.ContractorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import javax.persistence.EntityNotFoundException;
+import java.util.*;
 
 @Service
 public class ContractorService {
@@ -21,30 +19,51 @@ public class ContractorService {
         //set UUID for unique ID as this is not created on the front end.
         contractor.setId(UUID.randomUUID());
 
+        System.out.println("Contractor name: " + contractor.getName());
+
         //set date created inside the service as the date is not created on the front end.
         Date dateCreated = new Date();
         contractor.setDateAdded(dateCreated);
-        contractorRepository.save(contractor);
 
-        //What should I be returning when we have a successful/unsuccessful save?
+        if(!contractor.getName().isEmpty() && !contractor.getStreet().isEmpty() && !contractor.getCity().isEmpty() &&
+                !contractor.getState().isEmpty() && !contractor.getZip().isEmpty() &&
+                contractor.getDateAdded() != null) {
+
+            System.out.println("All fields filled in, save will now be executed.");
+            contractorRepository.save(contractor);
+
+        } else{
+            //Handle error!
+        }
+
+        //What should I be returning when we have a successfulS save?
         return true;
     }
 
-    //Service to return all contractors in the db - no filters or parameters.
+    /*Service to return all contractors in the db.  If no contractors are found, an Entity not found
+     Exception is thrown.*/
     public List<Contractor> listAllContractors(){
         List<Contractor> contractors = (List<Contractor>) contractorRepository.findAll();
-        return contractors;
+
+        if(!contractors.isEmpty()){
+            System.out.print("Contractor list is empty!");
+            return contractors;
+        } else{
+            throw new EntityNotFoundException("No contractors were found in the database.");
+        }
     }
 
-    //Service to return all contractors based on state specified.
+    /*Service to return all contractors based on state specified.  If no contractors are found for the state specified,
+    an Entity not found Exception is thrown.*/
     public List<Contractor> listContractorsByState(String state){
         List<Contractor> contractors = contractorRepository.findByState(state);
-        return contractors;
-    }
 
-    //Service to delete contractor by id. Takes in UUID that has been converted from a String.
-    public void deleteContractorById(UUID id){
-        contractorRepository.deleteById(id);
+        if(!contractors.isEmpty()){
+            System.out.print("Contractor list is empty!");
+            return contractors;
+        } else{
+            throw new EntityNotFoundException("No contractors were found in the database for the state provided.");
+        }
     }
 
     /*Method below converts the string version of the UUID to a true UUID by inserting '-'s in the
@@ -66,7 +85,20 @@ public class ContractorService {
         return uuid;
     }
 
+    /*Service to delete contractor by id. Takes in UUID that has been converted from a String. If contractor with
+    the user provided ID isn't found an Entity Not Found Exception is thrown.*/
+    public void deleteContractorById(UUID id){
+        Optional<Contractor> contractor = contractorRepository.findById(id);
 
+        System.out.println("Contractor test " + contractor);
+
+        if(contractor.isPresent()){
+            System.out.println("Contractor exists. Delete operation is next.");
+            contractorRepository.deleteById(id);
+        } else{
+            throw new EntityNotFoundException("No contractors were found with that ID. No deletion occurred.");
+        }
+    }
 
 
 
