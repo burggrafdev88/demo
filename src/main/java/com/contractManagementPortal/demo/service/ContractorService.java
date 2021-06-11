@@ -15,7 +15,7 @@ public class ContractorService {
 
    /* Service to create a new contractor. Service creates the date and id for the contractor as this is not created
     on the front end.*/
-    public Boolean createContractor(Contractor contractor){
+    public Boolean createContractor(Contractor contractor) {
         //set UUID for unique ID as this is not created on the front end.
         contractor.setId(UUID.randomUUID());
 
@@ -31,13 +31,12 @@ public class ContractorService {
 
             System.out.println("All fields filled in, save will now be executed.");
             contractorRepository.save(contractor);
+            return true;
 
         } else{
-            //Handle error!
+            System.out.println("Not all the fields are filled in.");
+            return false;
         }
-
-        //What should I be returning when we have a successfulS save?
-        return true;
     }
 
     /*Service to return all contractors in the db.  If no contractors are found, an Entity not found
@@ -87,7 +86,7 @@ public class ContractorService {
 
     /*Service to delete contractor by id. Takes in UUID that has been converted from a String. If contractor with
     the user provided ID isn't found an Entity Not Found Exception is thrown.*/
-    public void deleteContractorById(UUID id){
+    public void deleteContractorById(UUID id) throws EntityNotFoundException{
         Optional<Contractor> contractor = contractorRepository.findById(id);
 
         System.out.println("Contractor test " + contractor);
@@ -99,8 +98,4 @@ public class ContractorService {
             throw new EntityNotFoundException("No contractors were found with that ID. No deletion occurred.");
         }
     }
-
-
-
-
 }

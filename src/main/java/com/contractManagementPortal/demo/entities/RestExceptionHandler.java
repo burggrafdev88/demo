@@ -18,8 +18,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-//    private ResponseEntity<ErrorModel> handleInvalidUserInputError(EntityNotFoundException ex){
-//        //Insert code to handle this exception.
-//        return
+//    @ExceptionHandler(MissingServletRequestParameterException.class)
+//    private ResponseEntity<ErrorModel> handleInvalidUserInputError(MissingServletRequestParameterException ex){
+//        ErrorModel error = new ErrorModel(HttpStatus.BAD_REQUEST, "Internal Server Error bro!!", ex.getMessage());
+//
+//        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 //    }
 }
