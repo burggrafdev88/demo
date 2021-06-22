@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 //Allow requests from local host 4200
@@ -53,15 +54,25 @@ public class ContractorController {
     /*New method to delete contractor by it's UUID (id). Method takes in a String and converts it to a UUID and then
     executes a delete operation.*/
     @RequestMapping(method = RequestMethod.DELETE, path="/{stringID}")
-    public void deleteContractorById(@PathVariable String stringID){
+    public Optional <Contractor> deleteContractorById(@PathVariable String stringID){
         System.out.println("Delete contractor by id called from Contractor contractor.");
         System.out.println("Unconverted UUID in string format: " + stringID);
 
         //Call method to format and convert String to a UUID.
         UUID uuid = contractorService.convertStringToUUIDFormat(stringID);
-        System.out.println("Unconverted UUID in string format: " + uuid);
+        System.out.println("Converted UUID in string format: " + uuid);
 
         //Delete.
-        contractorService.deleteContractorById(uuid);
+        Optional<Contractor> contractor = contractorService.deleteContractorById(uuid);
+        return contractor;
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, path="/{stringID}")
+    public Contractor updateContractorById(@PathVariable String stringID, @RequestBody Contractor contractor){
+        System.out.println("Update contractor by UUID called from Contractor controller.");
+
+        Contractor contractor1 = contractorService.updateContractorById(stringID, contractor);
+
+        return contractor1;
     }
 }

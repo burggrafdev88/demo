@@ -86,7 +86,7 @@ public class ContractorService {
 
     /*Service to delete contractor by id. Takes in UUID that has been converted from a String. If contractor with
     the user provided ID isn't found an Entity Not Found Exception is thrown.*/
-    public void deleteContractorById(UUID id) throws EntityNotFoundException{
+    public Optional<Contractor> deleteContractorById(UUID id) throws EntityNotFoundException{
         Optional<Contractor> contractor = contractorRepository.findById(id);
 
         System.out.println("Contractor test " + contractor);
@@ -97,5 +97,35 @@ public class ContractorService {
         } else{
             throw new EntityNotFoundException("No contractors were found with that ID. No deletion occurred.");
         }
+
+        return contractor;
+    }
+
+    public Contractor updateContractorById(String stringID, Contractor contractor) throws EntityNotFoundException{
+
+        //Convert stringID to correct UUID format so we can use the findById method.
+        UUID contractorID = convertStringToUUIDFormat(stringID);
+        Optional<Contractor> contractor1 = contractorRepository.findById(contractorID);
+
+       /* Checking if contractor exists in the database. If Contractor exists, we will update the properties and save.
+        Otherwise, we will throw an entity not found error.*/
+        if(contractor1.isPresent()){
+            /*We create 'contractor2' so we can access the Contractor methods. Contractor1 is of 'Optional' type and
+            therefore we cant access the methods on it.*/
+            Contractor contractor2 = contractor1.get();
+            contractor2.setName(contractor.getName());
+            contractor2.setStreet(contractor.getStreet());
+            contractor2.setCity(contractor.getCity());
+            contractor2.setState(contractor.getState());
+            contractor2.setZip(contractor.getZip());
+
+            //Save contractor and return it.
+            contractorRepository.save(contractor2);
+            return contractor2;
+
+        } else{
+            throw new EntityNotFoundException("No contractors were found with that ID. No update occurred.");
+        }
+
     }
 }
