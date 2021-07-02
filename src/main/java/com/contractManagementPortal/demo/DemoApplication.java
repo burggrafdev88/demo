@@ -1,7 +1,9 @@
 package com.contractManagementPortal.demo;
 
 import com.contractManagementPortal.demo.entities.Contractor;
+import com.contractManagementPortal.demo.entities.PaymentType;
 import com.contractManagementPortal.demo.repository.ContractorRepository;
+import com.contractManagementPortal.demo.repository.PaymentTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,6 +28,9 @@ class DemoCommandLineRunner implements CommandLineRunner{
 
 	@Autowired
 	private ContractorRepository contractorRepository;
+
+	@Autowired
+	private PaymentTypeRepository paymentTypeRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -66,6 +71,19 @@ class DemoCommandLineRunner implements CommandLineRunner{
 		contractorRepository.save(contractor3);
 
 		//Start here:  http://progressivecoder.com/inserting-records-to-table-using-spring-boot/
+
+		//Create payment types
+		PaymentType paymentType = new PaymentType();
+		paymentType.setType("ACH");
+		paymentTypeRepository.save(paymentType);
+
+		PaymentType paymentType2 = new PaymentType();
+		paymentType2.setType("Credit Card");
+		paymentTypeRepository.save(paymentType2);
+
+		PaymentType paymentType3 = new PaymentType();
+		paymentType3.setType("Unknown");
+		paymentTypeRepository.save(paymentType3);
 
 	}
 }

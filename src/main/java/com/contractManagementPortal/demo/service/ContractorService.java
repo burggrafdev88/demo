@@ -15,7 +15,7 @@ public class ContractorService {
 
    /* Service to create a new contractor. Service creates the date and id for the contractor as this is not created
     on the front end.*/
-    public Boolean createContractor(Contractor contractor) {
+    public Optional<Contractor> createContractor(Contractor contractor) {
         //set UUID for unique ID as this is not created on the front end.
         contractor.setId(UUID.randomUUID());
 
@@ -25,17 +25,20 @@ public class ContractorService {
         Date dateCreated = new Date();
         contractor.setDateAdded(dateCreated);
 
+        System.out.println("Payment type: " + contractor.getPaymentType());
+
+        //create a method for this in my domain!!!!!!!!!!!!!
         if(!contractor.getName().isEmpty() && !contractor.getStreet().isEmpty() && !contractor.getCity().isEmpty() &&
                 !contractor.getState().isEmpty() && !contractor.getZip().isEmpty() &&
-                contractor.getDateAdded() != null) {
+                contractor.getPaymentType() !=null && contractor.getDateAdded() != null) {
 
             System.out.println("All fields filled in, save will now be executed.");
-            contractorRepository.save(contractor);
-            return true;
+            contractor = contractorRepository.save(contractor);
+            return Optional.of(contractor);
 
         } else{
             System.out.println("Not all the fields are filled in.");
-            return false;
+            return Optional.empty();
         }
     }
 

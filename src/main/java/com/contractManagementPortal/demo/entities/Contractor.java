@@ -1,18 +1,19 @@
 package com.contractManagementPortal.demo.entities;
 
 import com.contractManagementPortal.demo.entities.PaymentType;
+import com.fasterxml.jackson.databind.deser.BasicDeserializerFactory;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 
 
 //Entity - Contractor will be mapped to its own table by JPA. Table name will be equal to class name.
 @Entity
 public class Contractor {
     @Id
-    private UUID id;   //use to be of type 'long' and had annotation '@GeneratedValue'
+    private UUID id;
 
     @Column(nullable = false)
     private String name;
@@ -30,10 +31,10 @@ public class Contractor {
     private String zip;
 
     /*Contractor will have a unidirectional many to one relationship with Payment Type with Contractor being the
-    owning side.*/
-//    @ManyToOne
-//    @JoinColumn(name="payment_type_id")
-//    private PaymentType paymentType;
+//    owning side.*/
+    @ManyToOne
+    @JoinColumn(name="payment_type_id", referencedColumnName = "id")  //nullable = false property removed
+    private PaymentType paymentType;
 
     @Column(nullable = false)
     private Date dateAdded;
@@ -51,7 +52,7 @@ public class Contractor {
         this.state = state;
         this.zip = zip;
         this.dateAdded = new Date();
-//        this.paymentType = paymentType;
+        this.paymentType = paymentType;
     }
 
     public UUID getId() {
@@ -110,13 +111,13 @@ public class Contractor {
         this.dateAdded = dateAdded;
     }
 
-//    public PaymentType getPaymentType() {
-//        return paymentType;
-//    }
-//
-//    public void setPaymentType(PaymentType paymentType) {
-//        this.paymentType = paymentType;
-//    }
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
 
     @Override
     public String toString() {

@@ -20,21 +20,17 @@ public class ContractorController {
     @Autowired
     private ContractorService contractorService;
 
-    /*New method for inserting a contractor into the db. Would it make sense for this method to throw an Exception in the
-    event a user doesn't provide all the parameters? If so, I'd like to build this in. Or, is there a better way
-    for me to handle this scenario than I am now?*/
+    /*Method for inserting a contractor into the db.*/
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Contractor> createContractor(@RequestBody Contractor contractor) {
         System.out.println("Create contractors called from Contractor controller.");
 
-        if(contractorService.createContractor(contractor)){
-            return new ResponseEntity<>(contractor, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return contractorService.createContractor(contractor)
+                .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
-    //New method for returning list of all contractors.
+    //Method for returning list of all contractors.
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Contractor>> getContractors(){
         System.out.println("Get contractors called from Contractor controller.");
@@ -42,7 +38,7 @@ public class ContractorController {
         return new ResponseEntity<>(contractors, HttpStatus.OK);
     }
 
-    /*New method for returning list of contractors by state passed to method. May be able to use this method later for
+    /*Method for returning list of contractors by state passed to method. May be able to use this method later for
     "find by office" capability.*/
     @RequestMapping(method = RequestMethod.GET, path="/state/{state}")
     public ResponseEntity<List<Contractor>> getContractorsByState(@PathVariable String state){
@@ -51,11 +47,11 @@ public class ContractorController {
         return new ResponseEntity<>(contractors, HttpStatus.OK);
     }
 
-    /*New method to delete contractor by it's UUID (id). Method takes in a String and converts it to a UUID and then
+    /*Method to delete contractor by it's UUID (id). Method takes in a String and converts it to a UUID and then
     executes a delete operation.*/
     @RequestMapping(method = RequestMethod.DELETE, path="/{stringID}")
-    public Optional <Contractor> deleteContractorById(@PathVariable String stringID){
-        System.out.println("Delete contractor by id called from Contractor contractor.");
+    public ResponseEntity<Contractor> deleteContractorById(@PathVariable String stringID){
+        System.out.println("Delete contractor by id called from Contractor controller.");
         System.out.println("Unconverted UUID in string format: " + stringID);
 
         //Call method to format and convert String to a UUID.
@@ -64,9 +60,10 @@ public class ContractorController {
 
         //Delete.
         Optional<Contractor> contractor = contractorService.deleteContractorById(uuid);
-        return contractor;
+        return contractor.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    /*Method for updating a contractor by it's ID.*/
     @RequestMapping(method = RequestMethod.PUT, path="/{stringID}")
     public Contractor updateContractorById(@PathVariable String stringID, @RequestBody Contractor contractor){
         System.out.println("Update contractor by UUID called from Contractor controller.");
