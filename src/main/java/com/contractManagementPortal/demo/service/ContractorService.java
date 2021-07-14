@@ -2,6 +2,7 @@ package com.contractManagementPortal.demo.service;
 
 import com.contractManagementPortal.demo.entities.Contractor;
 import com.contractManagementPortal.demo.repository.ContractorRepository;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,6 @@ public class ContractorService {
         //set date created inside the service as the date is not created on the front end.
         Date dateCreated = new Date();
         contractor.setDateAdded(dateCreated);
-
-        System.out.println("Payment type: " + contractor.getPaymentType());
 
         //create a method for this in my domain!!!!!!!!!!!!!
         if(!contractor.getName().isEmpty() && !contractor.getStreet().isEmpty() && !contractor.getCity().isEmpty() &&

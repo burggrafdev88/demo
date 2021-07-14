@@ -1,26 +1,25 @@
 package com.contractManagementPortal.demo.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name = "PaymentType")
-public class PaymentType {
+public class AgreementType {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private String type;
 
-//    Why do we need a no arg constructor?
-    public PaymentType() {
+    public AgreementType() {
     }
 
-    public PaymentType(Long id, String type) {
+    public AgreementType(Long id, String type) {
         this.id = id;
         this.type = type;
     }
@@ -39,13 +38,5 @@ public class PaymentType {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    @Override
-    public String toString() {
-        return "PaymentType{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                '}';
     }
 }

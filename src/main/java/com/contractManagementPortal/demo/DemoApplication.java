@@ -1,8 +1,12 @@
 package com.contractManagementPortal.demo;
 
+import com.contractManagementPortal.demo.entities.AgreementType;
 import com.contractManagementPortal.demo.entities.Contractor;
+import com.contractManagementPortal.demo.entities.Office;
 import com.contractManagementPortal.demo.entities.PaymentType;
+import com.contractManagementPortal.demo.repository.AgreementTypeRepository;
 import com.contractManagementPortal.demo.repository.ContractorRepository;
+import com.contractManagementPortal.demo.repository.OfficeRepository;
 import com.contractManagementPortal.demo.repository.PaymentTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -32,43 +36,14 @@ class DemoCommandLineRunner implements CommandLineRunner{
 	@Autowired
 	private PaymentTypeRepository paymentTypeRepository;
 
+	@Autowired
+	private AgreementTypeRepository agreementTypeRepository;
+
+	@Autowired
+	private OfficeRepository officeRepository;
+
 	@Override
 	public void run(String... args) throws Exception {
-
-		//Create contractor 1.
-		Contractor contractor = new Contractor();
-		contractor.setId(UUID.randomUUID());
-		contractor.setName("Mickey's Engineering");
-		contractor.setStreet("8300 Metcalf Avenue");
-		contractor.setCity("Overland Park");
-		contractor.setState("Kansas");
-		contractor.setZip("66212");
-		Date date = new Date();
-		contractor.setDateAdded(date);
-		contractorRepository.save(contractor);
-
-		//Create contractor 2.
-		Contractor contractor2 = new Contractor();
-		contractor2.setId(UUID.randomUUID());
-		contractor2.setName("JE Contractor's");
-		contractor2.setStreet("1200 Main Street");
-		contractor2.setCity("Kansas City");
-		contractor2.setState("Missouri");
-		contractor2.setZip("64114");
-		Date date2 = new Date();
-		contractor2.setDateAdded(date2);
-		contractorRepository.save(contractor2);
-
-		Contractor contractor3 = new Contractor();
-		contractor3.setId(UUID.randomUUID());
-		contractor3.setName("KC Concrete Cutters");
-		contractor3.setStreet("2100 Southwest Boulevard");
-		contractor3.setCity("Kansas City");
-		contractor3.setState("Missouri");
-		contractor3.setZip("64118");
-		Date date3 = new Date();
-		contractor3.setDateAdded(date3);
-		contractorRepository.save(contractor3);
 
 		//Start here:  http://progressivecoder.com/inserting-records-to-table-using-spring-boot/
 
@@ -84,6 +59,69 @@ class DemoCommandLineRunner implements CommandLineRunner{
 		PaymentType paymentType3 = new PaymentType();
 		paymentType3.setType("Unknown");
 		paymentTypeRepository.save(paymentType3);
+
+		AgreementType agreementType = new AgreementType();
+		agreementType.setType("Master Agreement");
+		agreementTypeRepository.save(agreementType);
+
+		AgreementType agreementType1 = new AgreementType();
+		agreementType1.setType("Terms and Conditions");
+		agreementTypeRepository.save(agreementType1);
+
+		//Create offices.
+		Office office = new Office();
+		office.setOffice("Kansas City");
+		officeRepository.save(office);
+
+		Office office1 = new Office();
+		office1.setOffice("Denver");
+		officeRepository.save(office1);
+
+		Office office2 = new Office();
+		office2.setOffice("Oklahoma City");
+		officeRepository.save(office2);
+
+		Office office3 = new Office();
+		office3.setOffice("Omaha");
+		officeRepository.save(office3);
+
+		//Create contractor 1.
+		Contractor contractor = new Contractor();
+		contractor.setId(UUID.randomUUID());
+		contractor.setName("Mickey's Engineering");
+		contractor.setStreet("8300 Metcalf Avenue");
+		contractor.setCity("Overland Park");
+		contractor.setState("Kansas");
+		contractor.setZip("66212");
+		Date date = new Date();
+		contractor.setDateAdded(date);
+		contractor.setPaymentType(paymentType);
+		contractorRepository.save(contractor);
+
+		//Create contractor 2.
+		Contractor contractor2 = new Contractor();
+		contractor2.setId(UUID.randomUUID());
+		contractor2.setName("JE Contractor's");
+		contractor2.setStreet("1200 Main Street");
+		contractor2.setCity("Kansas City");
+		contractor2.setState("Missouri");
+		contractor2.setZip("64114");
+		Date date2 = new Date();
+		contractor2.setDateAdded(date2);
+		contractor2.setPaymentType(paymentType2);
+		contractorRepository.save(contractor2);
+
+		Contractor contractor3 = new Contractor();
+		contractor3.setId(UUID.randomUUID());
+		contractor3.setName("KC Concrete Cutters");
+		contractor3.setStreet("2100 Southwest Boulevard");
+		contractor3.setCity("Kansas City");
+		contractor3.setState("Missouri");
+		contractor3.setZip("64118");
+		Date date3 = new Date();
+		contractor3.setDateAdded(date3);
+		contractor3.setPaymentType(paymentType3);
+		contractorRepository.save(contractor3);
 
 	}
 }

@@ -1,6 +1,5 @@
 package com.contractManagementPortal.demo.repository;
 
-import com.contractManagementPortal.demo.entities.Contractor;
 import com.contractManagementPortal.demo.entities.PaymentType;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

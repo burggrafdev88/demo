@@ -1,7 +1,8 @@
 package com.contractManagementPortal.demo.controller;
 
+import com.contractManagementPortal.demo.entities.AgreementType;
 import com.contractManagementPortal.demo.entities.PaymentType;
-import com.contractManagementPortal.demo.service.PaymentTypeService;
+import com.contractManagementPortal.demo.service.AgreementTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,18 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 //Allow requests from local host 4200
 @CrossOrigin(origins = {"http://localhost:4200"})
-@RequestMapping(value = "paymentTypes")
+@RequestMapping(value = "agreementTypes")
 @RestController
-public class PaymentTypeController {
+public class AgreementTypeController {
 
     @Autowired
-    private PaymentTypeService paymentTypeService;
+    AgreementTypeService agreementTypeService;
 
     /*Method to create a payment type.*/
-    public ResponseEntity<PaymentType> createPaymentType(@RequestBody PaymentType paymentType){
-        System.out.println("Create payment type called from payment type controller.");
+    public ResponseEntity<AgreementType> createAgreementType(@RequestBody AgreementType agreementType){
+        System.out.println("Create agreement type called from agreement type controller.");
 
-        return paymentTypeService.createPaymentType(paymentType)
+        return agreementTypeService.createAgreementType(agreementType)
                 .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }

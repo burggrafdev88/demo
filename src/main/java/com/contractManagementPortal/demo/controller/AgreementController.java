@@ -26,11 +26,16 @@ public class AgreementController {
     public ResponseEntity<Agreement> createAgreement(@RequestBody Agreement agreement){
         System.out.println("Create agreement called from Agreement controller.");
 
-        if(agreementService.createAgreement(agreement)){
-            return new ResponseEntity<>(agreement, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+//        if(agreementService.createAgreement(agreement)){
+//            System.out.println("Agreement type test!!: " + agreement.getAgreementType());
+//            return new ResponseEntity<>(agreement, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+
+        return agreementService.createAgreement(agreement)
+                .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     };
 
     //Method for returning list of all agreements.

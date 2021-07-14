@@ -19,25 +19,26 @@ public class AgreementService {
     private AgreementRepository agreementRepository;
 
     /* Service to create a new agreement. Service creates the id for the agreement as this is not created
-     on the front end.*/
-    public Boolean createAgreement(Agreement agreement) {
-        //set UUID for unique ID as this is not created on the front end.
-        agreement.setId(UUID.randomUUID());
+     on the front end. Used to return a boolean!!*/
+    public Optional<Agreement> createAgreement(Agreement agreement) {
 
-        System.out.println("Contractor name: " + agreement.getAgreementName());
+        System.out.println("Agreement name: " + agreement.getAgreementName());
 
         if(!agreement.getAgreementName().isEmpty() && !agreement.getPocFirstName().isEmpty()
                 && !agreement.getPocLastName().isEmpty() && !agreement.getPocEmail().isEmpty()
                 && agreement.getBeginDate() != null && agreement.getExpirationDate() != null
-                && agreement.getAmount() != null) {
+                && agreement.getAmount() != null && agreement.getAgreementType() != null
+                && agreement.getOffice() != null & agreement.getContractor() != null) {
 
             System.out.println("All fields filled in, save will now be executed.");
             agreementRepository.save(agreement);
-            return true;
+
+            return Optional.of(agreement);
 
         } else{
             System.out.println("Not all the fields are filled in.");
-            return false;
+
+            return Optional.empty();
         }
     }
 

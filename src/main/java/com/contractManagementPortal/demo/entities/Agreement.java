@@ -9,21 +9,23 @@ import java.util.UUID;
 public class Agreement {
 
     @Id
+    @GeneratedValue
     private UUID id;
 
-//    @Column(nullable = false)
-//    private Enum type;
+    @ManyToOne
+    @JoinColumn(name="agreement_type_id", referencedColumnName = "id", nullable = false)
+    private AgreementType agreementType;
 
     @Column(nullable = false)
     private String agreementName;
 
-//    @Column(nullable = false)
-//    private Office office;
+    @ManyToOne
+    @JoinColumn(name="office_id", referencedColumnName = "id", nullable = false)
+    private Office office;
 
-//    @ManyToOne
-////    @JoinColumn(name = "Contractor_id")
-//    @Column(nullable = false)
-//    private Contractor contractor;
+    @ManyToOne
+    @JoinColumn(name = "contractor_id", referencedColumnName = "id", nullable = false)
+    private Contractor contractor;
 
     @Column(nullable = false)
     private String pocFirstName;
@@ -53,11 +55,12 @@ public class Agreement {
     public Agreement() {
     }
 
-    public Agreement(UUID id, Enum type, /*Contractor contractor,*/ String pocFirstName, String pocLastName,
-                     String pocPhoneNumber, String pocEmail, Date beginDate, Date expirationDate, BigDecimal amount) {
+    public Agreement(UUID id, AgreementType agreementType, Contractor contractor, String pocFirstName, String pocLastName,
+                     String pocPhoneNumber, String pocEmail, Date beginDate, Date expirationDate, BigDecimal amount, Office office) {
         this.id = id;
-//        this.type = type;
-//        this.contractor = contractor;
+        this.agreementType = agreementType;
+        this.office = office;
+        this.contractor = contractor;
         this.pocFirstName = pocFirstName;
         this.pocLastName = pocLastName;
         this.pocPhoneNumber = pocPhoneNumber;
@@ -75,13 +78,13 @@ public class Agreement {
         this.id = id;
     }
 
-//    public Enum getType() {
-//        return type;
-//    }
-//
-//    public void setType(Enum type) {
-//        this.type = type;
-//    }
+    public AgreementType getAgreementType() {
+        return agreementType;
+    }
+
+    public void setAgreementType(AgreementType agreementType) {
+        this.agreementType = agreementType;
+    }
 
     public String getAgreementName() {
         return agreementName;
@@ -91,13 +94,21 @@ public class Agreement {
         this.agreementName = agreementName;
     }
 
-    //    public Contractor getContractor() {
-//        return contractor;
-//    }
-//
-//    public void setContractor(Contractor contractor) {
-//        this.contractor = contractor;
-//    }
+    public Office getOffice() {
+        return office;
+    }
+
+    public void setOffice(Office office) {
+        this.office = office;
+    }
+
+        public Contractor getContractor() {
+        return contractor;
+    }
+
+    public void setContractor(Contractor contractor) {
+        this.contractor = contractor;
+    }
 
     public String getPocFirstName() {
         return pocFirstName;
