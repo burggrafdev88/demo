@@ -1,13 +1,7 @@
 package com.contractManagementPortal.demo;
 
-import com.contractManagementPortal.demo.entities.AgreementType;
-import com.contractManagementPortal.demo.entities.Contractor;
-import com.contractManagementPortal.demo.entities.Office;
-import com.contractManagementPortal.demo.entities.PaymentType;
-import com.contractManagementPortal.demo.repository.AgreementTypeRepository;
-import com.contractManagementPortal.demo.repository.ContractorRepository;
-import com.contractManagementPortal.demo.repository.OfficeRepository;
-import com.contractManagementPortal.demo.repository.PaymentTypeRepository;
+import com.contractManagementPortal.demo.entities.*;
+import com.contractManagementPortal.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -41,6 +35,9 @@ class DemoCommandLineRunner implements CommandLineRunner{
 
 	@Autowired
 	private OfficeRepository officeRepository;
+
+	@Autowired
+	private BidTypeRepository bidTypeRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -84,6 +81,19 @@ class DemoCommandLineRunner implements CommandLineRunner{
 		Office office3 = new Office();
 		office3.setOffice("Omaha");
 		officeRepository.save(office3);
+
+		//Create bid types.
+		BidType bidType = new BidType();
+		bidType.setType("Formal RFP");
+		bidTypeRepository.save(bidType);
+
+		BidType bidType1 = new BidType();
+		bidType1.setType("Informal Bid");
+		bidTypeRepository.save(bidType1);
+
+		BidType bidType2 = new BidType();
+		bidType2.setType("No Bid");
+		bidTypeRepository.save(bidType2);
 
 		//Create contractor 1.
 		Contractor contractor = new Contractor();
